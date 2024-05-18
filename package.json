@@ -1,0 +1,18 @@
+{
+  "name": "attendence-spreadsheet-mangler",
+  "version": "0.0.1",
+  "description": "Merge attendence spreadsheets",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ohwhatnow",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.6"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
