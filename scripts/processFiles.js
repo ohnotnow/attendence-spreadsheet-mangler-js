@@ -62,16 +62,21 @@ async function processFiles(directoryPath) {
         const sheet = workbook.Sheets[sheetName];
         const json = xlsx.utils.sheet_to_json(sheet);
         const columns = extractImportantColumns(json);
-        console.log(columns);
         data.push(...columns);
     });
 
     // Perform your grouping and calculations here
 
     const finalData = finaliseData(data);
+    const zeroAttendanceData = finalData.filter(record => record.Attendance === 0);
+    const someAttendanceData = finalData.filter(record => record.Attendance > 0);
     const outputWorkbook = xlsx.utils.book_new();
     const outputSheet = xlsx.utils.json_to_sheet(finalData);
-    xlsx.utils.book_append_sheet(outputWorkbook, outputSheet, 'Results');
+    const zeroSheet = xlsx.utils.json_to_sheet(zeroAttendanceData);
+    const someSheet = xlsx.utils.json_to_sheet(someAttendanceData);
+    xlsx.utils.book_append_sheet(outputWorkbook, outputSheet, 'All Results');
+    xlsx.utils.book_append_sheet(outputWorkbook, zeroSheet, 'Zero Attendance');
+    xlsx.utils.book_append_sheet(outputWorkbook, someSheet, 'Some Attendance');
 
     const outputFilePath = path.join(require('os').homedir(), 'Desktop', 'output.xlsx');
     xlsx.writeFile(outputWorkbook, outputFilePath);
