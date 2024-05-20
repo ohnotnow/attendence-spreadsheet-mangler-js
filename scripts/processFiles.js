@@ -78,8 +78,12 @@ async function processFiles(directoryPath) {
     xlsx.utils.book_append_sheet(outputWorkbook, outputSheet, 'All Results');
     xlsx.utils.book_append_sheet(outputWorkbook, zeroSheet, 'Zero Attendance');
     xlsx.utils.book_append_sheet(outputWorkbook, someSheet, 'Some Attendance');
-
-    const outputFilePath = path.join(require('os').homedir(), 'Desktop', 'output.xlsx');
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    const outputFilePath = path.join(require('os').homedir(), 'Desktop', `assessments-${formattedDate}.xlsx`);
     xlsx.writeFile(outputWorkbook, outputFilePath);
 
     return outputFilePath;
