@@ -7,9 +7,9 @@ function finaliseData(data) {
 
     // Iterate over each record and merge based on 'Matric'
     data.forEach(record => {
-        const matric = record.Matric;
+        const matric = String(record.Matric).padStart(7, '0')
         if (!mergedRecords[matric]) {
-            mergedRecords[matric] = { Surname: record.Surname, Forenames: record.Forenames, Matric: String(matric).padStart(7, '0'), Attendance: 0 };
+            mergedRecords[matric] = { Surname: record.Surname, Forenames: record.Forenames, Matric: matric, Email: record.Email, Attendance: 0 };
         }
         mergedRecords[matric].Attendance += record.Attendance;
     });
@@ -45,6 +45,7 @@ function extractImportantColumns(data) {
             column['Surname'] = row['Course'];
             column['Forenames'] = extractSecondKeyValues(row);
             column['Matric'] = row['__EMPTY_2'];
+            column['Email'] = row['__EMPTY_3'];
             column['Attendance'] = row['__EMPTY_20'];
             columns.push(column);
         }
